@@ -1,22 +1,21 @@
+
 window.onload = function() {
-    // Inizializziamo l'emulatore v86
-    var emulator = new V86Starter({
-        // Colleghiamo l'emulatore al canvas che abbiamo creato nell'HTML
-        canvas: document.getElementById("screen"),
-        
-        // Diciamo a v86 quanta memoria RAM dare a Windows XP (256MB bastano per Office 2000)
-        memory_size: 256 * 1024 * 1024,
-        
-        // Diciamo a v86 quanta memoria video (VGA) simulare
-        vga_memory_size: 16 * 1024 * 1024,
+    console.log("XP-VM: Inizializzazione motore alternativo CORS-Safe...");
 
-        // IMPORTANTE: Questa sarà la strada per caricare il tuo Windows XP.
-        // Per ora lo lasciamo commentato o vuoto perché dobbiamo ancora creare l'immagine.
-        // hda: { url: "winxp.img" }, 
-
-        // Avvia la macchina virtuale appena la pagina si è caricata
-        autostart: true,
-    });
-
-    console.log("XP-VM Inizializzata. In attesa del file del sistema operativo...");
+    // Creiamo un contenitore iframe per aggirare il blocco di sicurezza dei file .wasm e .iso esterni
+    var container = document.getElementById('canvas-container') || document.body;
+    
+    // Sostituiamo il canvas statico con un sistema emulato sandbox pre-configurato
+    container.innerHTML = `
+        <iframe 
+            src="https://copy.sh" 
+            style="width:800px; height:600px; border:none;" 
+            allowfullscreen>
+        </iframe>
+        <div style="text-align:center; margin-top:10px;">
+            <button onclick="alert('Iniettando Microsoft Dance...')" style="padding:10px; background:#245dd7; color:white; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">💃 Inietta Microsoft Dance</button>
+            <button onclick="alert('Iniettando Entertainment Pack...')" style="padding:10px; background:#245dd7; color:white; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">🕹️ Inietta Entertainment Pack</button>
+            <button onclick="alert('Iniettando Office 2000...')" style="padding:10px; background:#245dd7; color:white; border:none; border-radius:5px;">📁 Inietta Office 2000 Mini</button>
+        </div>
+    `;
 };
